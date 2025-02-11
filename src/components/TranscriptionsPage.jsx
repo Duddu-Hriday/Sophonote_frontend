@@ -1,26 +1,55 @@
 import { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
 import { useNavigate } from "react-router-dom";
-
+import { supabase } from "./SupabaseClient";
 // Initialize Supabase client
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
-const supabaseKey = import.meta.env.VITE_SUPABASE_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+
 
 function TranscriptionsPage() {
   const [transcriptions, setTranscriptions] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchTranscriptions();
+    fetchUserId();
   }, []);
 
-  const fetchTranscriptions = async () => {
+  const fetchUserId = async () =>{
+    setLoading(true);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const userEmail = user?.email;
+    console.log("UserEmail: ",userEmail);
+    if(!userEmail)
+    {
+      console.log("No User email found in localStorage");
+      setLoading(false);
+      return;
+    }
+
+    const { data: userData, error: userError } = await supabase
+      .from("users")
+      .select("user_id")
+      .eq("email", userEmail)
+      .single();
+
+    if (userError) {
+      console.error("Error fetching user ID:", userError);
+      setLoading(false);
+      return;
+    }
+
+    setUserId(userData.user_id);
+    console.log("userData = ",userData);
+    fetchTranscriptions(userData.user_id);
+
+  };
+
+  const fetchTranscriptions = async (userId) => {
     setLoading(true);
     const { data, error } = await supabase
       .from("transcriptions")
       .select("transcription_id, text, created_at")
+      .eq("user_id",userId)
       .order("transcription_id", { ascending: false });
 
     if (error) {
