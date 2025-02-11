@@ -15,6 +15,10 @@ function LiveRecordCard() {
 
   const startRecording = async () => {
     try {
+      if (!localStorage.getItem("user")) {
+        alert("Login/Signup is required");
+        return;
+      }
       const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
       const mediaRecorder = new MediaRecorder(stream);
       mediaRecorderref.current = mediaRecorder;
@@ -58,6 +62,15 @@ function LiveRecordCard() {
 
     setIsUploading(true);
     const formData = new FormData();
+    const user = localStorage.getItem("user");
+    if (user) {
+      formData.append("user", user);
+    } else {
+      alert("User not found. Please login/signup.");
+      setIsUploading(false);
+      return;
+    }
+
     const file = new File([audioBlob], "recording.webm", { type: "audio/webm" });
     console.log("File Type =", file.type);
     formData.append("audio", file);
@@ -127,18 +140,18 @@ function LiveRecordCard() {
       {
         !transcription && recordingDone &&
         <div className="flex justify-center">
-        <button onClick={handleUpload} className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
-          {isUploading ? <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5"></span> : "Start Transcription"}
-        </button>
+          <button onClick={handleUpload} className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+            {isUploading ? <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5"></span> : "Start Transcription"}
+          </button>
         </div>
       }
 
       {
         transcription && (
           <div className="mt-4 p-4 bg-gray-100 rounded-lg">
-          <h3 className="text-gray-700 font-semibold">Transcription:</h3>
-          <p className="text-gray-800 mt-2">{transcription}</p>
-        </div>
+            <h3 className="text-gray-700 font-semibold">Transcription:</h3>
+            <p className="text-gray-800 mt-2">{transcription}</p>
+          </div>
         )
       }
 

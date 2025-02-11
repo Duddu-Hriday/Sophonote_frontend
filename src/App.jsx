@@ -5,7 +5,9 @@ import LiveRecordCard from "./components/LiveRecordCard";
 import UploadFileCard from "./components/UploadFileCard";
 import Reload from "./components/Reload";
 import TranscriptionCard from "./components/TranscriptionCard";
-import TranscriptionsPage from "./components/TranscriptionsPage"; // Import new page
+import TranscriptionsPage from "./components/TranscriptionsPage";
+import SignupCard from "./components/SignupCard";
+import LoginCard from "./components/LoginCard";
 import "./App.css";
 
 function Home() {
@@ -29,6 +31,9 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/transcriptions" element={<TranscriptionsPage />} />
+        <Route path="/signup" element={<SignupCard/>} />
+        <Route path="/login" element={<LoginCard/>} />
+
       </Routes>
       <Reload />
     </Router>
