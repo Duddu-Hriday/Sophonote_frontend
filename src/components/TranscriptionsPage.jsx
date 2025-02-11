@@ -20,7 +20,7 @@ function TranscriptionsPage() {
     setLoading(true);
     const { data, error } = await supabase
       .from("transcriptions")
-      .select("transcription_id, text")
+      .select("transcription_id, text, created_at")
       .order("transcription_id", { ascending: false });
 
     if (error) {
@@ -46,13 +46,25 @@ function TranscriptionsPage() {
         {loading ? (
           <p className="text-gray-500 mt-2">Loading...</p>
         ) : transcriptions.length > 0 ? (
-          <ul className="bg-white shadow-md rounded-lg p-4">
-            {transcriptions.map((item) => (
-              <li key={item.transcription_id} className="p-2 border-b last:border-none">
-                📝 {item.text}
-              </li>
-            ))}
-          </ul>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  {transcriptions.map((item, index) => {
+    const formattedDate = new Date(item.created_at).toLocaleString("en-US", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      // hour12: false,
+      timeZone: "IST",
+    }) + " IST";
+    return (
+    <div key={index} className="p-4 bg-white rounded-lg shadow-md">
+      <h3 className="text-lg font-semibold">Transcription {index + 1}</h3>
+      <p className="text-gray-700 mt-2">📝 {item.text}</p>
+      <p className="text-sm text-gray-500 mt-1">Date: {formattedDate}</p>
+    </div>
+  )})}
+</div>
         ) : (
           <p className="text-gray-500 mt-2">No transcriptions found.</p>
         )}

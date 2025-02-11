@@ -105,14 +105,14 @@ function LiveRecordCard() {
         {isRecording && (
           <button
             onClick={stopRecording}
-            className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center justify-center gap-2"
+            className="mt-4 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition flex items-center justify-center gap-2 relative"
           >
+            <span className="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full animate-ping"></span>
             <StopCircle size={20} />
             Stop Recording
           </button>
         )}
       </div>
-
 
       {audioURL && (
         <div className="mt-4">
@@ -126,9 +126,11 @@ function LiveRecordCard() {
 
       {
         !transcription && recordingDone &&
-        <button onClick={handleUpload} className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-          {isUploading? "Transcribing": "Start Transcription"}
+        <div className="flex justify-center">
+        <button onClick={handleUpload} className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+          {isUploading ? <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5"></span> : "Start Transcription"}
         </button>
+        </div>
       }
 
       {

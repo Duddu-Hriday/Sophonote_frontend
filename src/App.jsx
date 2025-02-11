@@ -11,7 +11,7 @@ import "./App.css";
 function Home() {
   return (
     <main className="p-8 flex flex-col md:flex-row justify-center items-center gap-6">
-      <div className="flex flex-col md:flex-row gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 px-6">
         <LiveRecordCard />
         <UploadFileCard />
         <TranscriptionCard />

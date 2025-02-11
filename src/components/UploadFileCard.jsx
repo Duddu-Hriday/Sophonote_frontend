@@ -22,11 +22,18 @@ function UploadFileCard() {
         alert("File is not mp3");
         return;
       }
+
+      if (file.size > 1 * 1024 * 1024) { // 1 MB = 1024 * 1024 bytes
+        alert("File size exceeds 1 MB");
+        return;
+      }
+
       setSelectedFile(file);
       setUploadedFile(true);
       setAudioURL(URL.createObjectURL(file))
       console.log(file.name);
     }
+
   }
 
   const handleUpload = async () => {
@@ -65,6 +72,7 @@ function UploadFileCard() {
 
 
   return (
+    
     <div className="bg-white p-6 rounded-2xl shadow-lg text-center transition hover:shadow-xl hover:scale-105 duration-300">
       <UploadCloud size={40} className="text-purple-600 mx-auto mb-3" />
       <h2 className="text-xl font-bold text-gray-800">Upload Audio File</h2>
@@ -88,9 +96,11 @@ function UploadFileCard() {
 
       {
         !transcriptionDone && uploadedFile &&
-        <button onClick={handleUpload} className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-          {isUploading? "Transcribing": "Start Transcription"}
+        <div className="flex justify-center">
+        <button onClick={handleUpload} className="mt-4 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition flex items-center justify-center gap-2">
+          {isUploading ? <span className="animate-spin border-2 border-white border-t-transparent rounded-full w-5 h-5"></span> : "Start Transcription"}
         </button>
+        </div>
       }
 
 {
