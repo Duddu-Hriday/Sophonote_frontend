@@ -34,7 +34,7 @@ function UploadFileCard() {
     formData.append("audio", selectedFile);
 
     try{
-      const response = await fetch("http://localhost:3000/upload",{
+      const response = await fetch("https://sophonote-backend.vercel.app/upload",{
         method:"POST",
         body: formData,
       });

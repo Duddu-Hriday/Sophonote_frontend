@@ -76,7 +76,7 @@ function LiveRecordCard() {
     formData.append("audio", file);
 
     try {
-      const response = await fetch("http://localhost:3000/upload", {
+      const response = await fetch("hhttps://sophonote-backend.vercel.app/upload", {
         method: "POST",
         body: formData,
       });
