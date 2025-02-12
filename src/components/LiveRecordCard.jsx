@@ -72,7 +72,7 @@ function LiveRecordCard() {
     }
 
     const file = new File([audioBlob], "recording.webm", { type: "audio/webm" });
-    console.log("File Type =", file.type);
+    // console.log("File Type =", file.type);
     formData.append("audio", file);
 
     try {
@@ -89,7 +89,7 @@ function LiveRecordCard() {
       const data = await response.json();
       setTranscription(data.transcript);
       // alert(data.transcript);
-      console.log("Transcription =", data.transcript);
+      // console.log("Transcription =", data.transcript);
     } catch (error) {
       console.error("Upload Error:", error.message || error);
     } finally {

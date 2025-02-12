@@ -18,7 +18,7 @@ function TranscriptionsPage() {
     setLoading(true);
     const user = JSON.parse(localStorage.getItem("user"));
     const userEmail = user?.email;
-    console.log("UserEmail: ",userEmail);
+    // console.log("UserEmail: ",userEmail);
     if(!userEmail)
     {
       console.log("No User email found in localStorage");
@@ -39,7 +39,7 @@ function TranscriptionsPage() {
     }
 
     setUserId(userData.user_id);
-    console.log("userData = ",userData);
+    // console.log("userData = ",userData);
     fetchTranscriptions(userData.user_id);
 
   };

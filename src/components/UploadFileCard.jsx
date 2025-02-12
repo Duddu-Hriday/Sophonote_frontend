@@ -37,7 +37,7 @@ function UploadFileCard() {
       setSelectedFile(file);
       setUploadedFile(true);
       setAudioURL(URL.createObjectURL(file))
-      console.log(file.name);
+      // console.log(file.name);
     }
 
   }
@@ -72,7 +72,7 @@ function UploadFileCard() {
       setTranscription(data.transcript);
       setTranscriptionDone(true);
       // alert(data.transcript);
-      console.log("Transcription = " + data.transcript);
+      // console.log("Transcription = " + data.transcript);
     }
 
     catch (error) {
