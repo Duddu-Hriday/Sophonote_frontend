@@ -29,8 +29,8 @@ function UploadFileCard() {
         return;
       }
 
-      if (file.size > 1 * 1024 * 1024) { // 1 MB = 1024 * 1024 bytes
-        alert("File size exceeds 1 MB");
+      if (file.size > 500 * 1024) { // 1 MB = 1024 * 1024 bytes
+        alert("File size exceeds 500 KB");
         return;
       }
 
